@@ -16,6 +16,27 @@ def my_view(request):
     return {'one': one, 'project': 'stock_portfolio'}
 
 
+
+@view_config(route_name='home', renderer='../templates/index.jinja2')
+def my_home_view(request):
+    return {}
+
+@view_config(route_name='login', renderer='../templates/login.jinja2')
+def my_login_view(request):
+    return {}
+
+@view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2')
+def my_portfolio_view(request):
+    return {}
+
+@view_config(route_name='detail', renderer='../templates/stock-detail.jinja2')
+def my_detail_view(request):
+    return {}
+
+@view_config(route_name='add', renderer='../templates/stock-add.jinja2')
+def my_view(request):
+    return {}
+
 db_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
 might be caused by one of the following things:
