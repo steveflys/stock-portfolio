@@ -3,34 +3,26 @@
   <head>
     <meta charset="utf-8">
     <title>Stock Portfolio</title>
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/index.css">
+
   </head>
   <body>
     <header>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>  
-          <li><a href="/auth">Log In</a></li>
-          <li><a href="/portfolio"></a>Portfolio</li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/auth">Log In - Register</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
           <li><a href="/stock">Add Stock</a></li>
-          <li><a href="/detail">Stock Detail</a></li>
         </ul>
       </nav>
     </header>
-
     <main>
-      Welcome to your stock portfolio
+      <h1>Your Stock Portfolio</h1>
 
       {% block content %}
-
-      <p>No Content</p>
-
+      <p>No content</p>
       {% endblock content %}
 
     </main>
-
-    <footer>
-    </footer>
   </body>
 </html>
