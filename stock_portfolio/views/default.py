@@ -4,9 +4,13 @@ from sqlalchemy.exc import DBAPIError
 from ..models import MyModel
 from ..sample_data import MOCK_DATA
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+import requests
+
+API_URL = https://api.iextrading.com/1.0
+
 
 @view_config(
-    route_name='home', 
+    route_name='home',
     renderer='../templates/index.jinja2'
     )
 def my_home_view(request):
@@ -61,7 +65,17 @@ def my_detail_view(request):
     renderer='../templates/stock-add.jinja2',
     )
 def my_add_view(request):
-    return {}
+    if request.method == 'GET':
+        try:
+            symbol = request.GET['symbol']
+            
+        except KeyError:
+            return {}
+
+         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+         return {'company': data}   
+    
+
 
 
 
