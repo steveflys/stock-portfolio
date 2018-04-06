@@ -1,19 +1,35 @@
 {% extends "base.jinja2" %}
 
-{% block content %}
+    {% block content %}
     <h1>Please sign in to your acount</h1>
 
-    <form id="customer-info">
+    <form id="login-info">
         <fieldset>
             <legend id="legend">Sign In</legend>
 
-            <label for="user_name">Username</label>
-            <input name="user_name" id="un" type="text">
+            <label for="username">Username</label>
+            <input name="username" id="un" type="text">
+
             <label for="password">Password</label>
             <input name="password" id="pw" type="text"><br/>
             <button id="submit">Submit</button>
         </fieldset>
     </form>
-  {% endblock content %} 
+    <form id="register">
+      <fieldset>
+          <legend id="legend">Create an account</legend>
 
-  </body
+          <label for="firstName">First Name</label>
+          <input name="firstName" id="fn" type="text">
+          <label for="lastname">Last Name</label>
+          <input name="lastname" id="ln" type="text">
+          <label for="username">User name</label>
+          <input name="username" id="un" type="text">
+          <label for="password">Password</label>
+          <input name="password" id="pw" type="text"><br/>
+          <button id="register">Register</button>
+
+      </fieldset>
+    </form>
+    {% endblock content %}
+

@@ -1,24 +1,8 @@
-<!DOCTYPE.HTML>
-<html>
-  <head>
-    <title>Stock Portfolio</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="styles/stockAdd.css">
-  </head>
-    
-  <body>
-    <header>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#"></a>Log In</li>
-            <li><a href="#"></a>Register</li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">Stock Detail</a></li>
-          </ul>
-        </nav>
-      </header>   
+
+{% extends "base.jinja2" %}
+
+    {% block content %}
+
     <h1>Please enter your stock purchases</h1>
 
     <form id="customer-info">
@@ -36,4 +20,4 @@
         </fieldset>
     </form>
 
-  </body>
+    {% endblock content %}

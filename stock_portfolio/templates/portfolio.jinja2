@@ -1,29 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Stock Portfolio</title>
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/index.css">
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#"></a>Log In</li>
-          <li><a href="#"></a>Register</li>
-          <li><a href="#">Add Stock</a></li>
-          <li><a href="#">Stock Detail</a></li>
-        </ul>
-      </nav>
-    </header>
 
-    <main>
-      Welcome to your stock portfolio
-    </main>
+{% extends "base.jinja2" %}
 
-    <footer>
-    </footer>
-  </body>
-</html>
+{% block content %}
+<h1>Your Portfolio</h1>
+
+<ul>
+  {% for entry in entries %}
+  <li>
+    <h2>{{entry.companyName}}</h2>
+    <p>({{entry.symbol}}) {{entry.website}}</p>
+    <p><a href="{{request.route_url('detail', symbol=entry.symbol)}}">view details</a></p>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}

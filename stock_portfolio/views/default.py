@@ -1,44 +1,69 @@
 from pyramid.response import Response
 from pyramid.view import view_config
-
 from sqlalchemy.exc import DBAPIError
-
 from ..models import MyModel
+from ..sample_data import MOCK_DATA
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
-
-@view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
-def my_view(request):
-    try:
-        query = request.dbsession.query(MyModel)
-        one = query.filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'one': one, 'project': 'stock_portfolio'}
-
-
-
-@view_config(route_name='home', renderer='../templates/index.jinja2')
+@view_config(
+    route_name='home', 
+    renderer='../templates/index.jinja2'
+    )
 def my_home_view(request):
     return {}
 
-@view_config(route_name='auth', renderer='../templates/login.jinja2')
+
+@view_config(route_name='auth',
+    renderer='../templates/login.jinja2',
+    )
 def my_login_view(request):
-    return {}
+    if request.method == 'GET':
+        try:
+            username = request.GET['username']
+            password = request.GET['password']
+            print('User: {}, Pass: {}'.format(username, password))
 
-@view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2')
+            return HTTPFound(location=request.route_url('portfolio'))
+
+        except KeyError:
+            return {}
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        print('User: {}, Pass: {}, Email: {}'.format(username, password, email))
+
+        return HTTPFound(location=request.route_url('entries'))
+
+    return HTTPNotFound()
+
+
+@view_config(route_name='portfolio',
+    renderer='../templates/portfolio.jinja2',
+    ) 
 def my_portfolio_view(request):
-    return {}
+    return {
+        'entries': MOCK_DATA
+        }
 
-@view_config(
-    route_name='detail',
+
+@view_config(route_name='detail',
     renderer='../templates/stock-detail.jinja2',
-    request_method='GET')
+    )
 def my_detail_view(request):
+    for stock in MOCK_DATA:
+        if stock['symbol'] == request.matchdict['symbol']:
+            return {'stock': stock}
+
+
+@view_config(route_name='add',
+    renderer='../templates/stock-add.jinja2',
+    )
+def my_add_view(request):
     return {}
 
-@view_config(route_name='add', renderer='../templates/stock-add.jinja2')
-def my_view(request):
-    return {}
+
 
 db_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
