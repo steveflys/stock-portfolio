@@ -48,6 +48,7 @@ def my_login_view(request):
     renderer='../templates/portfolio.jinja2',
     )
 def my_portfolio_view(request):
+    """This will disply their protfolio from the MOCK_DATA file. and if a stock is added will query the API and append that stock data to the MOCK_DATA"""
     if request.method == 'GET':
         return {'entries': MOCK_DATA}
     if request.method == 'POST':
@@ -63,6 +64,7 @@ def my_portfolio_view(request):
     renderer='../templates/stock-detail.jinja2',
     )
 def my_detail_view(request):
+    """This will take the symbol from the portfolio page and display all the stock info for that symbol from MOCK_DATA"""
     for stock in MOCK_DATA:
         if stock['symbol'] == request.matchdict['symbol']:
             return {'stock': stock}
@@ -72,6 +74,7 @@ def my_detail_view(request):
     renderer='../templates/stock-add.jinja2',
     )
 def my_add_view(request):
+    """This alows the customer to query the API with the stock symbol and returns the stock data. The customer can then add that stock to their portfolio and bget passed to the new portfolio page"""
     if request.method == 'GET':
         try:
             symbol = request.GET['symbol']
@@ -83,9 +86,6 @@ def my_add_view(request):
         company = response.json()
         return {'data': company}
         
-
-
-
 
 db_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
