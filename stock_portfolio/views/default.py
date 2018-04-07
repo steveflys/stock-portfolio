@@ -4,9 +4,14 @@ from sqlalchemy.exc import DBAPIError
 from ..models import MyModel
 from ..sample_data import MOCK_DATA
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+import requests
+import json
+
+API_URL = 'https://api.iextrading.com/1.0'
+
 
 @view_config(
-    route_name='home', 
+    route_name='home',
     renderer='../templates/index.jinja2'
     )
 def my_home_view(request):
@@ -41,17 +46,25 @@ def my_login_view(request):
 
 @view_config(route_name='portfolio',
     renderer='../templates/portfolio.jinja2',
-    ) 
+    )
 def my_portfolio_view(request):
-    return {
-        'entries': MOCK_DATA
-        }
+    """This will disply their protfolio from the MOCK_DATA file. and if a stock is added will query the API and append that stock data to the MOCK_DATA"""
+    if request.method == 'GET':
+        return {'entries': MOCK_DATA}
+    if request.method == 'POST':
+        # import pdb; pdb.set_trace()
+        symbol = request.POST['symbol']
+        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+        data = response.json()
+        MOCK_DATA.append(data)
+        return {'entries': MOCK_DATA}
 
 
 @view_config(route_name='detail',
     renderer='../templates/stock-detail.jinja2',
     )
 def my_detail_view(request):
+    """This will take the symbol from the portfolio page and display all the stock info for that symbol from MOCK_DATA"""
     for stock in MOCK_DATA:
         if stock['symbol'] == request.matchdict['symbol']:
             return {'stock': stock}
@@ -61,9 +74,18 @@ def my_detail_view(request):
     renderer='../templates/stock-add.jinja2',
     )
 def my_add_view(request):
-    return {}
+    """This alows the customer to query the API with the stock symbol and returns the stock data. The customer can then add that stock to their portfolio and bget passed to the new portfolio page"""
+    if request.method == 'GET':
+        try:
+            symbol = request.GET['symbol']
 
+        except KeyError:
+            return {}
 
+        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+        company = response.json()
+        return {'data': company}
+        
 
 db_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem

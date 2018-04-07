@@ -3,21 +3,29 @@
 
     {% block content %}
 
-    <h1>Please enter your stock purchases</h1>
+    <h1>Stock Trader</h1>
 
-    <form id="customer-info">
-        <fieldset>
-            <legend id="legend">Customer Information</legend>
-
-            <label for="custFirstName">Stock name</label>
-            <input name="custFirstName" id="fn" type="text">
-            <label for="custLastname">Styock Symbol</label>
-            <input name="custLastName" id="ln" type="text"><br/>
-            <label for="creditCardNumber">Number of shares to purchase</label>
-            <input for="creditCardNumber" id="cc" type="number"><br/>
-            <button id="register">Purchase</button>
-
-        </fieldset>
+    <form action="{{request.route_url('add')}}" method="GET">
+            <input for="stock" type="text" name="symbol"><br/>
+            <button id="add" type="submit">Search</button>            
     </form>
+    {% if data %}
+    <h2>Company name: {{data.companyName}}</h2>
+    <h3>Symbol: {{data.symbol}}</h3>
+    <p>CEO: {{data.CEO}}</p>
+    <p>Website:{{data.website}}</p>
+    <p>Industry: {{data.industry}}</p>
+    <p>Sector: {{data.sector}}</p>
+    <p>Exchange: {{data.exchange}}</p>
+    <p>Issue Type: {{data.issueType}}</p>
+    <p>Description: {{data.description}}</p>
+    <form action="{{request.route_url('portfolio')}}" method="POST">
+        <input type="hidden" "text" value={{data.symbol}} name="symbol">
+        <button type="submit">Add to Portfolio</button>
+    </form>
+        
+
+    {% endif %}
 
     {% endblock content %}
+
