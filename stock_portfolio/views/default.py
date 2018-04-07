@@ -52,7 +52,10 @@ def my_portfolio_view(request):
         return {'entries': MOCK_DATA}
     if request.method == 'POST':
         # import pdb; pdb.set_trace()
-        MOCK_DATA.append('data')
+        symbol = request.POST['symbol']
+        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+        data = response.json()
+        MOCK_DATA.append(data)
         return {'entries': MOCK_DATA}
 
 
@@ -77,7 +80,6 @@ def my_add_view(request):
             return {}
 
         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
-        # import pdb; pdb.set_trace()
         company = response.json()
         return {'data': company}
         

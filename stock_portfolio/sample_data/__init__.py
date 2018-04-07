@@ -121,8 +121,3 @@ MOCK_DATA = [
         "sector": "Polution"
     },
 ]
-
-# <form action="{{request.route_url('portfolio')}}" method="POST">
-#         <input type="hidden" "text" value={{data.symbol}}>
-#         <button type="submit">Add to Portfolio</button>
-#     </form>
