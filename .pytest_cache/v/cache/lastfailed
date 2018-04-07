@@ -1,3 +1,11 @@
 {
-  "": true
+  "stock_portfolio/tests.py::BaseTest": true,
+  "stock_portfolio/tests.py::TestMyViewFailureCondition": true,
+  "stock_portfolio/tests.py::TestMyViewFailureCondition::test_failing_view": true,
+  "stock_portfolio/tests.py::TestMyViewSuccessCondition": true,
+  "stock_portfolio/tests.py::TestMyViewSuccessCondition::test_passing_view": true,
+  "stock_portfolio/tests/test_unit_views.py::test_default_behavior_of_auth_view": true,
+  "stock_portfolio/tests/test_unit_views.py::test_default_behavior_of_home_view": true,
+  "stock_portfolio/tests/test_unit_views.py::test_default_behavior_of_portfolio_view": true,
+  "stock_portfolio/tests/test_unit_views.py::test_post_auth_view": true
 }
