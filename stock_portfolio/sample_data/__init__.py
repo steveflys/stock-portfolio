@@ -33,15 +33,15 @@ MOCK_DATA = [
         "sector": "Retail"
     },
     {
-        "symbol": "MS",
-        "companyName": "Microsoft",
-        "exchange": "New York Stock Exchange",
-        "industry": "Technology",
+        "symbol": "MSFT",
+        "companyName": "Microsoft Corporation",
+        "exchange": "Nasdaq Global Select",
+        "industry": "Application Software",
         "website": "http://www.microsoft.com",
-        "description": "Microsoft makes software",
-        "CEO": "John L. Flannery",
+        "description": "Microsoft Corp is a technology company. It develop, license, and support a wide range of software products and services. Its business is organized into three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing.",
+        "CEO": "Satya Nadella",
         "issueType": "cs",
-        "sector": "Tech"
+        "sector": "Technology"
     },
     {
         "symbol": "GBP",
@@ -121,3 +121,8 @@ MOCK_DATA = [
         "sector": "Polution"
     },
 ]
+
+# <form action="{{request.route_url('portfolio')}}" method="POST">
+#         <input type="hidden" "text" value={{data.symbol}}>
+#         <button type="submit">Add to Portfolio</button>
+#     </form>

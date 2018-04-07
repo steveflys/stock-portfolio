@@ -6,4 +6,4 @@ def test_default_behavior_of_base_route(dummy_request):
     response = home_view(request)
     assert isinstance(response, Response)
 
-def test_sign
+# def test_sign

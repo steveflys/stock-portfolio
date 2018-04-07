@@ -5,8 +5,9 @@ from ..models import MyModel
 from ..sample_data import MOCK_DATA
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 import requests
+import json
 
-API_URL = https://api.iextrading.com/1.0
+API_URL = 'https://api.iextrading.com/1.0'
 
 
 @view_config(
@@ -45,11 +46,14 @@ def my_login_view(request):
 
 @view_config(route_name='portfolio',
     renderer='../templates/portfolio.jinja2',
-    ) 
+    )
 def my_portfolio_view(request):
-    return {
-        'entries': MOCK_DATA
-        }
+    if request.method == 'GET':
+        return {'entries': MOCK_DATA}
+    if request.method == 'POST':
+        # import pdb; pdb.set_trace()
+        MOCK_DATA.append('data')
+        return {'entries': MOCK_DATA}
 
 
 @view_config(route_name='detail',
@@ -68,13 +72,15 @@ def my_add_view(request):
     if request.method == 'GET':
         try:
             symbol = request.GET['symbol']
-            
+
         except KeyError:
             return {}
 
-         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
-         return {'company': data}   
-    
+        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+        # import pdb; pdb.set_trace()
+        company = response.json()
+        return {'data': company}
+        
 
 
 
