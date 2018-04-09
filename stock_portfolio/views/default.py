@@ -82,6 +82,7 @@ def my_add_view(request):
         except KeyError:
             return {}
 
+        # import pdb; pdb.set_trace()
         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
         company = response.json()
         return {'data': company}
