@@ -1,0 +1,8 @@
+[
+  "stock_portfolio/tests.py::TestMyViewSuccessCondition::test_passing_view",
+  "stock_portfolio/tests.py::TestMyViewFailureCondition::test_failing_view",
+  "stock_portfolio/tests/test_unit_views.py::test_default_behavior_of_home_view",
+  "stock_portfolio/tests/test_unit_views.py::test_default_behavior_of_auth_view",
+  "stock_portfolio/tests/test_unit_views.py::test_post_auth_view",
+  "stock_portfolio/tests/test_unit_views.py::test_default_behavior_of_portfolio_view"
+]
