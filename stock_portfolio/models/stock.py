@@ -22,4 +22,4 @@ class Stock(Base):
     description = Column(String)
 
 
-Index('my_index', MyModel.name, unique=True, mysql_length=255)
+# Index('my_index', Stock.symbol, unique=True, mysql_length=255)
