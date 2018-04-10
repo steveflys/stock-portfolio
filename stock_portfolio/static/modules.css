@@ -8,6 +8,9 @@ body {
 img {
     width: 80px;
 }
+form {
+  width: 200px;
+}
 h1,
 h2,
 h3,
@@ -20,7 +23,7 @@ h6 {
 p {
   font-weight: 300;
 }
-.font-normal {
+/* .font-normal {
   font-weight: 400;
 }
 .font-semi-bold {
@@ -154,4 +157,4 @@ p {
   .starter-template .copyright {
     margin-top: 20px;
   }
-}
+} */
