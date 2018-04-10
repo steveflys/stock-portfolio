@@ -18,7 +18,6 @@ API_URL = 'https://api.iextrading.com/1.0'
 def my_home_view(request):
     return {}
 
-
 @view_config(route_name='auth',
     renderer='../templates/login.jinja2',
     )
