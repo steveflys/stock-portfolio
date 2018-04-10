@@ -18,31 +18,30 @@ API_URL = 'https://api.iextrading.com/1.0'
 def my_home_view(request):
     return {}
 
+@view_config(route_name='auth',
+    renderer='../templates/login.jinja2',
+    )
+def my_login_view(request):
+    if request.method == 'GET':
+        try:
+            username = request.GET['username']
+            password = request.GET['password']
+            print('User: {}, Pass: {}'.format(username, password))
 
-# @view_config(route_name='auth',
-#     renderer='../templates/login.jinja2',
-#     )
-# def my_login_view(request):
-#     if request.method == 'GET':
-#         try:
-#             username = request.GET['username']
-#             password = request.GET['password']
-#             print('User: {}, Pass: {}'.format(username, password))
+            return HTTPFound(location=request.route_url('portfolio'))
 
-#             return HTTPFound(location=request.route_url('portfolio'))
+        except KeyError:
+            return {}
 
-#         except KeyError:
-#             return {}
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        print('User: {}, Pass: {}, Email: {}'.format(username, password, email))
 
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         email = request.POST['email']
-#         password = request.POST['password']
-#         print('User: {}, Pass: {}, Email: {}'.format(username, password, email))
+        return HTTPFound(location=request.route_url('stocks'))
 
-#         return HTTPFound(location=request.route_url('entries'))
-
-#     return HTTPNotFound()
+    return HTTPNotFound()
 
 
 @view_config(route_name='portfolio',
@@ -51,17 +50,15 @@ def my_home_view(request):
 def my_portfolio_view(request):
     """This will disply their protfolio from the database and if a stock is added will query the API and append that stock data to the database"""
     if request.method == 'GET':
-        # import pdb; pdb.set_trace()
         try:
             query = request.dbsession.query(Stock)
             all_stocks = query.all()
         except DBAPIError:
             return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
 
-        return {'stocks': all_stocks}
+        return {'all_stocks': all_stocks}
 
     if request.method == 'POST':
-        # import pdb; pdb.set_trace()
         symbol = request.POST['symbol']
         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
         data = response.json()

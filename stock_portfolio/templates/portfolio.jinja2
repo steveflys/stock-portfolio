@@ -5,11 +5,11 @@
 <h1>Your Portfolio</h1>
 
 <ul>
-  {% for entry in entries %}
+  {% for stock in all_stocks %}
   <li>
-    <h2>{{entry.companyName}}</h2>
-    <p>({{entry.symbol}}) {{entry.website}}</p>
-    <p><a href="{{request.route_url('detail', symbol=entry.symbol)}}">view details</a></p>
+    <h2>{{stock.companyName}}</h2>
+    <p>({{stock.symbol}}) {{stock.website}}</p>
+    <p><a href="{{request.route_url('detail', symbol=stock.symbol)}}">view details</a></p>
   </li>
   {% endfor %}
 </ul>
