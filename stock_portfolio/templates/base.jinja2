@@ -3,11 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>Stock Portfolio</title>
-
+    <link rel="stylesheet" href="./static/base.css"/>
+    <link rel="stylesheet" href="./static/layout.css"/>
+    <link rel="stylesheet" href="./static/modules.css"/>
   </head>
   <body>
     <header>
       <nav>
+        <a href="/" id="logo">
+            <img id="stk_logo" src="./static/Stock-Market-PNG-HD.png" alt="">
+        </a>
+            <h1 id="app_title">My Portfolio</h1>
+            <p id="slogan">My Portfolio on the go</p>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/auth">Log In - Register</a></li>
@@ -17,7 +24,7 @@
       </nav>
     </header>
     <main>
-      <h1>Your Stock Portfolio</h1>
+      <h1>My Stock Portfolio</h1>
 
       {% block content %}
       <p>No content</p>

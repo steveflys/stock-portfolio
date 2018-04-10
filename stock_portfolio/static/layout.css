@@ -1,0 +1,14 @@
+nav, article, aside, footer section {
+    margin: 0 auto;
+  }
+  
+  nav {
+    margin-top: 25px;
+  }
+
+  #logo {
+    float: left;
+    color: black;
+    text-decoration: none;
+  }
+
