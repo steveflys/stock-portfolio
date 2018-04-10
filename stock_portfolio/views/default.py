@@ -40,7 +40,7 @@ def my_login_view(request):
         password = request.POST['password']
         print('User: {}, Pass: {}, Email: {}'.format(username, password, email))
 
-        return HTTPFound(location=request.route_url('entries'))
+        return HTTPFound(location=request.route_url('stocks'))
 
     return HTTPNotFound()
 
@@ -51,17 +51,15 @@ def my_login_view(request):
 def my_portfolio_view(request):
     """This will disply their protfolio from the database and if a stock is added will query the API and append that stock data to the database"""
     if request.method == 'GET':
-        # import pdb; pdb.set_trace()
         try:
             query = request.dbsession.query(Stock)
             all_stocks = query.all()
         except DBAPIError:
             return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
 
-        return {'stocks': all_stocks}
+        return {'all_stocks': all_stocks}
 
     if request.method == 'POST':
-        # import pdb; pdb.set_trace()
         symbol = request.POST['symbol']
         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
         data = response.json()
