@@ -1,6 +1,5 @@
 nav, article, aside, footer section {
     margin: 0 auto;
-    width: 900px;
   }
   
   nav {
@@ -14,14 +13,3 @@ nav, article, aside, footer section {
     text-decoration: none;
   }
 
-  hr {
-    clear: both;
-    border: 0;
-    height: 13px;
-    background-image: url('../img/hr-img.gif');
-  }
-
-  aside {
-    padding-top: 30px;
-    padding-bottom: 60px
-  }
