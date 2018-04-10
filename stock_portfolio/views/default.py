@@ -6,6 +6,7 @@ from ..sample_data import MOCK_DATA
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 import requests
 import json
+from . import DB_ERR_MSG
 
 API_URL = 'https://api.iextrading.com/1.0'
 
@@ -48,16 +49,24 @@ def my_login_view(request):
     renderer='../templates/portfolio.jinja2',
     )
 def my_portfolio_view(request):
-    """This will disply their protfolio from the MOCK_DATA file. and if a stock is added will query the API and append that stock data to the MOCK_DATA"""
+    """This will disply their protfolio from the database and if a stock is added will query the API and append that stock data to the database"""
     if request.method == 'GET':
-        return {'entries': MOCK_DATA}
+        # import pdb; pdb.set_trace()
+        try:
+            query = request.dbsession.query(Stock)
+            all_stocks = query.all()
+        except DBAPIError:
+            return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
+
+        return {'stocks': all_stocks}
+
     if request.method == 'POST':
         # import pdb; pdb.set_trace()
         symbol = request.POST['symbol']
         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
         data = response.json()
         MOCK_DATA.append(data)
-        return {'entries': MOCK_DATA}
+        return {'stocks': MOCK_DATA}
 
 
 @view_config(route_name='detail',
