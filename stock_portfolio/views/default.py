@@ -1,7 +1,7 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 from sqlalchemy.exc import DBAPIError
-from ..models import MyModel
+from ..models import Stock
 from ..sample_data import MOCK_DATA
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 import requests
