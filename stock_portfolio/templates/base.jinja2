@@ -17,6 +17,8 @@
             <p id="slogan">My Portfolio on the go</p>
         <ul>
           <li><a href="/">Home</a></li>
+          <li><a href="/logout">Logout</a></li>
+          {% if request.auth}
           <li><a href="/auth">Log In - Register</a></li>
           <li><a href="/portfolio">Portfolio</a></li>
           <li><a href="/add">Add Stock</a></li>
