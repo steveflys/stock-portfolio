@@ -9,8 +9,9 @@ from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized
 
 @view_config(
     route_name='auth',
-    renderer='./templates/auth.jinja2', permission=NO_PERMISSION_REQUIRED)
+    renderer='../templates/auth.jinja2', permission=NO_PERMISSION_REQUIRED)
 def auth_view(request):
+    import pdb; pdb.set_trace()
     if request.method == 'POST':
         try:
             username = request.POST['username']

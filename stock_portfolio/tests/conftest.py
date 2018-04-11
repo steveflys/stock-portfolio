@@ -1,8 +1,8 @@
 import os
 import pytest
-from pyramid import testing
-from ..models.meta import Base
 from ..models import Stock
+from ..models.meta import Base
+from pyramid import testing
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def test_stock():
 
 
 @pytest.fixture
-def configuration(request):s
+def configuration(request):
     """Setup a database for testing purposes."""
     config = testing.setUp(settings={
         # 'sqlalchecmy.url': 'postgres://localhost:5432/entries_test'

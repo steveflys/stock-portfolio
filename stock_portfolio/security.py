@@ -25,7 +25,7 @@ def includeme(config):
 
     config.set_authentication_policy(authn_policy)
     config.set_authorization_policy(authz_policy)
-    config.set_default_permisson('secret')
+    config.set_default_permission('secret')
     config.set_root_factory(MyRoot)
 
     session_secret = os.environ.get('SESSION_SECRET', 'itsalsoaseekret')

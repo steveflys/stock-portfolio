@@ -6,32 +6,25 @@
     <h1>Please sign in to your acount</h1>
     <bd />
     <div class="content">
-        <form id="login-info">
-            <fieldset>
-                <legend id="legend">Sign In</legend>
-                <input type="hidden" name="csrf_token" value="[[request.session.get_csrf_token()}}">
-                <label for="username">Username</label>
-                <input name="username" id="un" type="text">
-                <label for="password">Password </label>
-                <input name="password" id="pw" type="text">
-                <button id="submit">Submit</button>
-            </fieldset>
+        <form id="login-info" method="GET">
+            <legend id="legend">Sign In</legend>
+            <input type="hidden" name="csrf_token" value="[[request.session.get_csrf_token()}}">
+            <label for="username">Username</label>
+            <input name="username" for="username" type="text">
+            <label for="password">Password </label>
+            <input name="password" for="password"type="text">
+            <button id="submit">Submit</button>
         </form>
-    
-    
-        <form id="register">
-        <fieldset>
+        <form id="register" method="POST">
             <legend id="legend">Create an account</legend>
             <input type="hidden" name="csrf_token" value="[[request.session.get_csrf_token()}}">
             <label for="username">Username</label>
-            <input name="username" id="un" type="text">
-            <label for="email">email</label>
-            <input name="email" id="em" type="text">
+            <input name="username" for="username" type="text">
+            <label for="email">Email</label>
+            <input name="email" for="email" type="text">
             <label for="password">Password </label>
-            <input name="password" id="pw" type="text">
+            <input name="password" for="password" type="text">
             <button id="register">Register</button>
-
-        </fieldset>
         </form>
     </div>
     {% endblock content %}
