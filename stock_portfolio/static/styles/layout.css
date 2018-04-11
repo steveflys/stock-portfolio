@@ -4,7 +4,7 @@ nav, article, aside, footer section {
   
 nav {
   margin-top: 25px;
-  color: rgb(212, 130, 99)
+  color: rgb(212, 130, 99);
 }
 
 img {
@@ -17,14 +17,14 @@ img {
   text-decoration: none;
   margin: 1px 10px;
 }
+
 li {
-  display: inline-block;
   margin: 5px 1px;
+  color: rgb(209, 147, 140);
 }
 
 #index-hdr {
   margin: 20px 0px;
-
 }
 
 

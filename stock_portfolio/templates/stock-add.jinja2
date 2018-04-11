@@ -20,7 +20,7 @@
     <p>Issue Type: {{data.issueType}}</p>
     <p>Description: {{data.description}}</p>
     <form action="{{request.route_url('portfolio')}}" method="POST">
-        <input type="hidden" name="csrf_token" value="[[request.session.get_csrf_token()}}">
+        <input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
         <input type="hidden" "text" value={{data.symbol}} name="symbol">
         <button type="submit">Add to Portfolio</button>
     </form>
