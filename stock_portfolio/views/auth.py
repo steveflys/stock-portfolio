@@ -1,17 +1,17 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.security import NO_PERMISSION_REQUIRED, remember, forget
-from sqlalchemy.exc import DBAPIError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from ..models import Account
 from . import DB_ERR_MSG
-from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized
+from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized, HTTPConflict
 
 
 @view_config(
     route_name='auth',
     renderer='../templates/auth.jinja2', permission=NO_PERMISSION_REQUIRED)
 def auth_view(request):
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     if request.method == 'POST':
         try:
             username = request.POST['username']
@@ -29,7 +29,13 @@ def auth_view(request):
             )
 
             headers = remember(request, userid=instance.username)
-            request.dbsession.add(instance)
+
+            try:
+                request.dbsession.add(instance)
+                request.dbsession.flush()
+
+            except IntegrityError:
+                return HTTPConflict()
 
             return HTTPFound(location=request.route_url('portfolio'), headers=headers)
 
