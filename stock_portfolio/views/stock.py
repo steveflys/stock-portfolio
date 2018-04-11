@@ -2,10 +2,9 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from pyramid.response import Response
 from pyramid.view import view_config
 from sqlalchemy.exc import DBAPIError
-from ..models import Entry
+from ..models import Stock
 from . import DB_ERR_MSG
 import requests
-import os
 
 
 API_URL = 'https://api.iextrading.com/1.0'
@@ -15,7 +14,7 @@ API_URL = 'https://api.iextrading.com/1.0'
 def entries_view(request):
     try:
         query = request.dbsession.query(Stock)
-        all_entries = query.all()
+        all_stocks = query.all()
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
@@ -24,69 +23,54 @@ def entries_view(request):
 
 @view_config(route_name='detail', renderer='../templates/stock-detail.jinja2', request_method='GET')
 def detail_view(request):
-    # try:
-    #     stock_symbol = request.matchdict['symbol']
-    # except KeyError:
-    #     return HTTPNotFound()
+    try:
+        stock_symbol = request.matchdict['symbol']
+    except KeyError:
+        return HTTPNotFound()
 
     try:
         query = request.dbsession.query(Stock)
-        stock_detail = query.filter(Stock.id == stock_id).first()
+        stock_detail = query.filter(Stock.symbol == stock_symbol).first()
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-    # res = requests.get('https://pixabay.com/api?key={}&q={}'.format(
-    #     API_KEY, entry_detail.title.split(' ')[0]))
-
-    # try:
-    #     url = res.json()['hits'][0]['webformatURL']
-    # except (KeyError, IndexError):
-    #     url = 'https://via.placeholder.com/300x300'
-
-    return {
-        "entry": entry_detail,
-        "img": url,
-        stock.companyName
-        stock.symbol
-        stock.CEO
-        stock.website
-        stock.industry
-        stock.sector
-        stock.exchange
-        stock.issueType
-        stock.description
-
-    'id'
-    'symbol'
-    'companyName' 
-    'CEO'
-    'website'
-    'industry'
-    'sector'
-    'exchange'
-    'issueType'
-    'description'
-    }
+    return {'stock': stock_detail}
 
 
-@view_config(route_name='new', renderer='../templates/new.jinja2')
-def new_view(request):
+@view_config(route_name='add', renderer='../templates/stock-add.jinja2')
+def my_add_view(request):
+    """This alows the customer to query the API with the stock symbol and returns the stock data. The customer can then add that stock to their portfolio and bget passed to the new portfolio page"""
+    if request.method == 'GET':
+        try:
+            symbol = request.GET['symbol']
+
+        except KeyError:
+            return {}
+
+        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+        company = response.json()
+        return {'data': company}
+
     if request.method == 'POST':
-        if not all([field in request.POST for field in ['title', 'body', 'date', 'author']]):
+        if not all([field in request.POST for field in ['companyName', 'CEO', 'symbol', 'website', 'industry', 'sector', 'exchange', 'issueType', 'description']]):
+            
             raise HTTPBadRequest
 
-        instance = Entry(
-            title=request.POST['title'],
-            body=request.POST['body'],
-            date=request.POST['date'],
-            author=request.POST['author'],
+        instance = Stock(
+            symbol='symbol',
+            companyName='companyName',
+            CEO='CEO',
+            website='website',
+            industry='industry',
+            sector='sector',
+            exchange='exchange',
+            issueType='issueType',
+            description='description'
         )
 
-        try:
-            request.dbsession.add(instance)
-        except DBAPIError:
-            return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+    try:
+        request.dbsession.add(instance)
+    except DBAPIError:
+        return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-        return HTTPFound(location=request.route_url('entries'))
-    if request.method == 'GET':
-        return {}
+    return HTTPFound(location=request.route_url('stocks'))

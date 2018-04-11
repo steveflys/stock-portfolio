@@ -1,7 +1,10 @@
 {% extends "base.jinja2" %}
 
     {% block content %}
+
+    <bd />
     <h1>Please sign in to your acount</h1>
+    <bd />
     <div class="content">
         <form id="login-info">
             <fieldset>
@@ -9,23 +12,22 @@
                 <input type="hidden" name="csrf_token" value="[[request.session.get_csrf_token()}}">
                 <label for="username">Username</label>
                 <input name="username" id="un" type="text">
-                <label for="password">Password</label>
-                <input name="password" id="pw" type="text"><br/>
+                <label for="password">Password </label>
+                <input name="password" id="pw" type="text">
                 <button id="submit">Submit</button>
             </fieldset>
         </form>
+    
+    
         <form id="register">
         <fieldset>
             <legend id="legend">Create an account</legend>
-
-            <label for="firstName">First Name</label>
-            <input name="firstName" id="fn" type="text">
-            <label for="lastname">Last Name</label>
-            <input name="lastname" id="ln" type="text">
-            <label for="username">User name</label>
+            <label for="username">Username</label>
             <input name="username" id="un" type="text">
-            <label for="password">Password</label>
-            <input name="password" id="pw" type="text"><br/>
+            <label for="email">email</label>
+            <input name="email" id="em" type="text">
+            <label for="password">Password </label>
+            <input name="password" id="pw" type="text">
             <button id="register">Register</button>
 
         </fieldset>

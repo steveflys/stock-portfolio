@@ -1,5 +1,5 @@
 from .meta import Base
-from datetime import datetime as DateTime
+from datetime import datetime as dt
 from sqlalchemy.exc import DBAPIError
 from cryptacular import bcrypt
 from sqlalchemy import (
@@ -19,8 +19,8 @@ class Account(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     email = Column(String, nullable=False)
-    registered_on = Column(DateTime, , nullable=False)
-    admin = Column(Boolean, , nullable=False, default=False)
+    registered_on = Column(DateTime, nullable=False)
+    admin = Column(Boolean, nullable=False, default=False)
 
     def __init__(self, username, email, password, admin=False):
         self.username = username

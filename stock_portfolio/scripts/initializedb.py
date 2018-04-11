@@ -46,4 +46,3 @@ def main(argv=sys.argv):
         for stock in MOCK_DATA:
             s = Stock(**stock)
             dbsession.add(s)
-

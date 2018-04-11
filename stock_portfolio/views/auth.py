@@ -9,7 +9,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized
 
 @view_config(
     route_name='auth',
-    renderer='../templates/login.jinja2', permission=NO_PERMISSION_REQUIRED)
+    renderer='./templates/auth.jinja2', permission=NO_PERMISSION_REQUIRED)
 def auth_view(request):
     if request.method == 'POST':
         try:
