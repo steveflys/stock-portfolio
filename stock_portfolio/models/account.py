@@ -1,7 +1,7 @@
 from .meta import Base
-from datetime import datetime as DateTime
-from sqlalchemy.exec import
-from 
+from datetime import datetime as dt
+from sqlalchemy.exc import DBAPIError
+from cryptacular import bcrypt
 from sqlalchemy import (
     Column,
     Integer,
@@ -10,7 +10,7 @@ from sqlalchemy import (
     Boolean,
 )
 
-
+manager = bcrypt.BCRYPTPasswordManager()
 
 
 class Account(Base):
@@ -19,8 +19,8 @@ class Account(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     email = Column(String, nullable=False)
-    registered_on = Column(DateTime, , nullable=False)
-    admin = Column(Boolean, , nullable=False, default=False)
+    registered_on = Column(DateTime, nullable=False)
+    admin = Column(Boolean, nullable=False, default=False)
 
     def __init__(self, username, email, password, admin=False):
         self.username = username
@@ -40,9 +40,6 @@ class Account(Base):
 
         if query is not None:
             if manager.check(query.password, password):
-                is_authenticated =- True
-                
-        return (is_authenticated, username)        
+                is_authenticated = True
 
-
-# Index('my_index', MyModel.name, unique=True, mysql_length=255)
+        return (is_authenticated, username)

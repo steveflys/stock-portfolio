@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Stock Portfolio</title>
-    <link rel="stylesheet" href="./static/base.css"/>
-    <link rel="stylesheet" href="./static/layout.css"/>
-    <link rel="stylesheet" href="./static/modules.css"/>
-  </head>
+    <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/styles/reset.css')}}">
+    <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/styles/base.css')}}">
+    <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/styles/layout.css')}}">
+    <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/styles/modules.css')}}">
   <body>
     <header>
       <nav>
@@ -14,19 +14,18 @@
             <img id="stk_logo" src="./static/Stock-Market-PNG-HD.png" alt="">
         </a>
             <h1 id="app_title">My Portfolio</h1>
-            <p id="slogan">My Portfolio on the go</p>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/logout">Logout</a></li>
-          {% if request.auth}
           <li><a href="/auth">Log In - Register</a></li>
+          {% if request.authenticated_userid %}
           <li><a href="/portfolio">Portfolio</a></li>
           <li><a href="/add">Add Stock</a></li>
+          <li><a href="{{request.route_url('logout')}}">Logout</a></li>
+          {% endif %}
         </ul>
       </nav>
     </header>
     <main>
-      <h1>My Stock Portfolio</h1>
 
       {% block content %}
       <p>No content</p>
