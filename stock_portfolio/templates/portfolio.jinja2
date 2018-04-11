@@ -5,7 +5,7 @@
 <h1>Your Portfolio</h1>
 
 <ul>
-  {% for stock in all_stocks %}
+  {% for stock in stocks %}
   <li>
     <h2>{{stock.companyName}}</h2>
     <p>({{stock.symbol}}) {{stock.website}}</p>
@@ -13,4 +13,4 @@
   </li>
   {% endfor %}
 </ul>
-{% endblock content %}
+{% endblock %}

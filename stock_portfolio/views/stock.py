@@ -52,25 +52,23 @@ def my_add_view(request):
         return {'data': company}
 
     if request.method == 'POST':
-        if not all([field in request.POST for field in ['companyName', 'CEO', 'symbol', 'website', 'industry', 'sector', 'exchange', 'issueType', 'description']]):
-            
-            raise HTTPBadRequest
 
-        instance = Stock(
-            symbol='symbol',
-            companyName='companyName',
-            CEO='CEO',
-            website='website',
-            industry='industry',
-            sector='sector',
-            exchange='exchange',
-            issueType='issueType',
-            description='description'
-        )
+        try:
+            symbol = request.POST['symbol']
+        except KeyError:
+            raise HTTPBadRequest()
+
+        try:
+            response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+            data = response.json()
+        except ValueError:
+            raise HTTPNotFound()
+
+        instance = Stock(**data)
 
     try:
         request.dbsession.add(instance)
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-    return HTTPFound(location=request.route_url('stocks'))
+    return HTTPFound(location=request.route_url('portfolio'))

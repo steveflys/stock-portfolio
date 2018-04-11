@@ -1,7 +1,7 @@
 import os
 import pytest
-from ..models import Stock
-from ..models.meta import Base
+from stock_portfolio.models import Stock
+from stock_portfolio.models.meta import Base
 from pyramid import testing
 
 
