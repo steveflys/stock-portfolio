@@ -22,6 +22,7 @@
         <form id="register">
         <fieldset>
             <legend id="legend">Create an account</legend>
+            <input type="hidden" name="csrf_token" value="[[request.session.get_csrf_token()}}">
             <label for="username">Username</label>
             <input name="username" id="un" type="text">
             <label for="email">email</label>
