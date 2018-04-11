@@ -8,7 +8,7 @@ def test_default_response_home_view(dummy_request):
 
 # Auth View Functionality
 def test_default_response_auth_view(dummy_request):
-    from ..views.default import auth_view
+    from stock_portfolio.views.default import auth_view
 
     response = auth_view(dummy_request)
     assert response.status_code == 200
@@ -25,7 +25,7 @@ def test_auth_signin_view(dummy_request):
 
 
 def test_auth_signup_view(dummy_request):
-    from ..views.default import auth_view
+    from stock_portfolio.views.default import auth_view
     from pyramid.httpexceptions import HTTPFound
 
     dummy_request.POST = {'username': 'watman', 'password': 'whodat', 'email': 'wat@wat.com'}
@@ -36,7 +36,7 @@ def test_auth_signup_view(dummy_request):
 
 
 def test_bad_reqeust_auth_signup_view(dummy_request):
-    from ..views.default import auth_view
+    from stock_portfolio.views.default import auth_view
     from pyramid.httpexceptions import HTTPBadRequest
 
     dummy_request.POST = {'password': 'whodat', 'email': 'wat@wat.com'}

@@ -1,1 +1,18 @@
-[]
+[
+  "stock_portfolio/tests.py::TestMyViewSuccessCondition::test_passing_view",
+  "stock_portfolio/tests/test_unit_default.py::test_default_response_home_view",
+  "stock_portfolio/tests/test_unit_default.py::test_default_response_auth_view",
+  "stock_portfolio/tests/test_unit_default.py::test_auth_signin_view",
+  "stock_portfolio/tests/test_unit_default.py::test_auth_signup_view",
+  "stock_portfolio/tests/test_unit_default.py::test_bad_reqeust_auth_signup_view",
+  "stock_portfolio/tests/test_unit_default.py::test_bad_request_method_auth_signup_view",
+  "stock_portfolio/tests/test_unit_model.py::test_constructed_stock_with_correct_date_added_to_database",
+  "stock_portfolio/tests/test_unit_model.py::test_constructed_stock_with_no_date_added_to_database",
+  "stock_portfolio/tests/test_unit_model.py::test_stock_with_no_symbol_throws_error",
+  "stock_portfolio/tests/test_unit_views.py::test_default_response_home_view",
+  "stock_portfolio/tests/test_unit_views.py::test_default_response_auth_view",
+  "stock_portfolio/tests/test_unit_views.py::test_auth_signin_view",
+  "stock_portfolio/tests/test_unit_views.py::test_auth_signup_view",
+  "stock_portfolio/tests/test_unit_views.py::test_bad_reqeust_auth_signup_view",
+  "stock_portfolio/tests/test_unit_views.py::test_bad_request_method_auth_signup_view"
+]
