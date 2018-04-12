@@ -24,5 +24,3 @@ class Stock(Base):
         'Account',
         secondary=association_table,
         back_populates="stock_id")
-
-

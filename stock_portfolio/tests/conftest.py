@@ -1,22 +1,33 @@
-import os
+# import os
 import pytest
-from stock_portfolio.models import Stock
-from stock_portfolio.models.meta import Base
 from pyramid import testing
+from ..models.meta import Base
+from ..models import Stock
+from ..models import Account
 
 
 @pytest.fixture
-def test_stock():
+def test_entry():
+    """Test stock entry."""
     return Stock(
-        symbol='WTF',
-        companyName='Wha The Foo',
-        CEO='Him',
-        website='www.foobar.com',
-        industry='yup',
-        sector='9th',
-        exchange='NYSE',
+        symbol='F',
+        companyName='Ford Motor Company',
+        exchange='New York Stock Exchange',
+        industry='Autos',
+        website='http://www.ford.com',
+        description='Anything is possible',
+        CEO='James P. Hackett',
         issueType='cs',
-        description='Does WTF he likes, when he likes'
+        sector='Consumer Cyclical'
+    )
+
+
+def test_account():
+    """Test account entry."""
+    return Account(
+        username='god',
+        password='whodat',
+        email='god@yourimagination.com'
     )
 
 
@@ -24,8 +35,8 @@ def test_stock():
 def configuration(request):
     """Setup a database for testing purposes."""
     config = testing.setUp(settings={
-        # 'sqlalchecmy.url': 'postgres://localhost:5432/entries_test'
-        'sqlalchemy.url': os.environ['TEST_DATABASE_URL']
+        'sqlalchemy.url': 'postgres://localhost:5432/stocks_test'
+        # 'sqlalchemy.url': os.environ['TEST_DATABASE_URL']
     })
     config.include('stock_portfolio.models')
     config.include('stock_portfolio.routes')

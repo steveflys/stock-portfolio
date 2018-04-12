@@ -2,7 +2,8 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from pyramid.response import Response
 from pyramid.view import view_config
 from sqlalchemy.exc import DBAPIError
-from ..models import Stock
+from ..models import Account, Stock
+from ..models.association import association_table
 from . import DB_ERR_MSG
 import requests
 
@@ -12,13 +13,11 @@ API_URL = 'https://api.iextrading.com/1.0'
 
 @view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2', request_method='GET')
 def entries_view(request):
-    try:
-        query = request.dbsession.query(Stock)
-        all_stocks = query.all()
-    except DBAPIError:
-        return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-    return {'stocks': all_stocks}
+    query = request.dbsession.query(association_table)
+    stocks = query.join(Stock).join(Account).all()
+
+    return {'stocks': stocks}
 
 
 @view_config(route_name='detail', renderer='../templates/stock-detail.jinja2', request_method='GET')
@@ -67,16 +66,25 @@ def my_add_view(request):
             raise HTTPBadRequest()
 
         try:
+            query = request.dbsession.query(Stock)
+            company = query.filter(Stock.symbol == symbol).one_or_none()
+        except DBAPIError:
+            return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+
+        if company is None:
             response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
-            data = response.json()
-        except ValueError:
-            raise HTTPNotFound()
+            company = response.json()
 
-        instance = Stock(**data)
+            instance = Stock(**company)
 
-    try:
-        request.dbsession.add(instance)
-    except DBAPIError:
-        return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+            try:
+                request.dbsession.add(instance)
+            except DBAPIError:
+                return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-    return HTTPFound(location=request.route_url('portfolio'))
+        user = request.dbsession.query(Account).filter(
+                Account.username == request.authenticated_userid).first()
+
+        company.account_id.append(user)
+
+        return HTTPFound(location=request.route_url('portfolio'))
