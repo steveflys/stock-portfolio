@@ -97,7 +97,8 @@ def my_add_view(request):
         # user = request.dbsession.query(Account).filter(
         #         Account.username == request.authenticated_userid).first()
 
-        user = request.authenticated_userid
+        user = request.dbsession.query(Account).filter(
+                Account.username == request.authenticated_userid).first()
 
         company.account_id.append(user)
 
