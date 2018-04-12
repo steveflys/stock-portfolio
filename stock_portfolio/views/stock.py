@@ -39,16 +39,24 @@ def detail_view(request):
 
 @view_config(route_name='add', renderer='../templates/stock-add.jinja2')
 def my_add_view(request):
-    """This alows the customer to query the API with the stock symbol and returns the stock data. The customer can then add that stock to their portfolio and bget passed to the new portfolio page"""
+    """This alows the customer to query the API with the stock symbol and returns the stock data. The customer can then add that stock to their portfolio and get passed to the portfolio page"""
+
     if request.method == 'GET':
         try:
-            symbol = request.GET['symbol']
-
+            symbol = request.GET['symbol'].upper()
         except KeyError:
-            return {}
+                return {}
 
-        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
-        company = response.json()
+        try:
+            query = request.dbsession.query(Stock)
+            company = query.filter(Stock.symbol == symbol).one_or_none()
+        except DBAPIError:
+            return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+
+        if company is None:
+            response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+            company = response.json()
+
         return {'data': company}
 
     if request.method == 'POST':

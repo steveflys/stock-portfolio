@@ -21,7 +21,7 @@
     <p>Description: {{data.description}}</p>
     <form action="{{request.route_url('add')}}" method="POST">
         <input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
-        <input type="hidden" "text" value={{data.symbol}} name="symbol">
+        <input type="hidden" "text" style="text-transform:uppercase" value={{data.symbol}} name="symbol">
         <button type="submit">Add to Portfolio</button>
     </form>
         
