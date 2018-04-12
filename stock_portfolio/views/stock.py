@@ -19,7 +19,6 @@ def entries_view(request):
 
     return {'stocks': stocks}
 
-
 @view_config(route_name='detail', renderer='../templates/stock-detail.jinja2', request_method='GET')
 def detail_view(request):
     try:
@@ -29,9 +28,13 @@ def detail_view(request):
 
     try:
         query = request.dbsession.query(Stock)
-        stock_detail = query.filter(Stock.symbol == stock_symbol).first()
+        stock_detail = query.filter(Stock.account_id == request.authenticated_userid).filter(Stock.symbol == stock_symbol).one_or_none()
+
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+
+    if stock_detail is None:
+        raise HTTPNotFound
 
     return {'stock': stock_detail}
 
