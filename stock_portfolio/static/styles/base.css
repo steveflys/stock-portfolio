@@ -3,7 +3,7 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   color: #ffffff;
-  background: #286918;
+  /* background: #286918; */
   margin: 32px;
-  /* background: url(./static/stock.jpg); */
+  background-image: url("./static/stock.jpg");
   }
