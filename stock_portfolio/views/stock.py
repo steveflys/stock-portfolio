@@ -17,14 +17,26 @@ def entries_view(request):
     try:
         query = request.dbsession.query(Account)
         instance = query.filter(Account.username == request.authenticated_userid).first()
-
+        # import pdb; pdb.set_trace()
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
-
     if instance:
         return {'data': instance.stock_id}
     else:
         return HTTPNotFound()
+
+
+    # try:
+    #     query = request.dbsession.query(Account)
+    #     instance = query.filter(Account.username == request.authenticated_userid).first()
+
+    # except DBAPIError:
+    #     return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+
+    # if instance:
+    #     return {'data': instance.stock_id}
+    # else:
+    #     return HTTPNotFound()
 
 
 @view_config(route_name='detail', renderer='../templates/stock-detail.jinja2', request_method='GET')
@@ -94,11 +106,10 @@ def my_add_view(request):
             except DBAPIError:
                 return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-        # user = request.dbsession.query(Account).filter(
-        #         Account.username == request.authenticated_userid).first()
-
         user = request.dbsession.query(Account).filter(
                 Account.username == request.authenticated_userid).first()
+        
+
 
         company.account_id.append(user)
 
