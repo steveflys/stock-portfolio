@@ -2,12 +2,10 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
-    DateTime,
-    Text,
-    ForeignKey,
 )
-
+from sqlalchemy.orm import relationship
 from .meta import Base
+from .association import association_table
 
 
 class Stock(Base):
@@ -23,3 +21,8 @@ class Stock(Base):
     exchange = Column(String)
     issueType = Column(String)
     description = Column(String)
+    account_id = relationship(
+        'Account',
+        secondary=association_table,
+        back_populates="stock_id")
+
