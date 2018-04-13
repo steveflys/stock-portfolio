@@ -11,3 +11,4 @@ def main(global_config, **settings):
     config.include('.security')
     config.scan()
     return config.make_wsgi_app()
+

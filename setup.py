@@ -16,7 +16,6 @@ requires = [
     'pyramid_jinja2',
     'pyramid_retry',
     'pyramid_tm',
-    'psycopg2',
     'psycopg2-binary',
     'requests',
     'SQLAlchemy',
