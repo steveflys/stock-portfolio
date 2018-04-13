@@ -17,7 +17,7 @@ def entries_view(request):
     try:
         query = request.dbsession.query(Account)
         instance = query.filter(Account.username == request.authenticated_userid).first()
-        # import pdb; pdb.set_trace()
+
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
     if instance:
@@ -55,9 +55,6 @@ def detail_view(request):
     for each in stock_detail:
        if each.username == request.authenticated_userid:
            return {'stock': stock_detail}
-
-
-    
 
 
 @view_config(route_name='add', renderer='../templates/stock-add.jinja2')
@@ -108,8 +105,6 @@ def my_add_view(request):
 
         user = request.dbsession.query(Account).filter(
                 Account.username == request.authenticated_userid).first()
-        
-
 
         company.account_id.append(user)
 
