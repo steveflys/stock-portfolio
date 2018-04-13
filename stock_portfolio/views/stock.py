@@ -26,19 +26,6 @@ def entries_view(request):
         return HTTPNotFound()
 
 
-    # try:
-    #     query = request.dbsession.query(Account)
-    #     instance = query.filter(Account.username == request.authenticated_userid).first()
-
-    # except DBAPIError:
-    #     return Response(DB_ERR_MSG, content_type='text/plain', status=500)
-
-    # if instance:
-    #     return {'data': instance.stock_id}
-    # else:
-    #     return HTTPNotFound()
-
-
 @view_config(route_name='detail', renderer='../templates/stock-detail.jinja2', request_method='GET')
 def detail_view(request):
     try:
@@ -86,6 +73,9 @@ def my_add_view(request):
         except KeyError:
             raise HTTPBadRequest()
 
+        query = request.dbsession.query(Account)
+        user = query.filter(Account.username == request.authenticated_userid).first()
+
         try:
             query = request.dbsession.query(Stock)
             company = query.filter(Stock.symbol == symbol).one_or_none()
@@ -97,15 +87,12 @@ def my_add_view(request):
             company = response.json()
 
             instance = Stock(**company)
+            instance.account_id.append(user)
 
             try:
                 request.dbsession.add(instance)
             except DBAPIError:
                 return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
-        user = request.dbsession.query(Account).filter(
-                Account.username == request.authenticated_userid).first()
-
-        company.account_id.append(user)
-
-        return HTTPFound(location=request.route_url('portfolio'))
+        else:
+            company.account_id.append(user)
