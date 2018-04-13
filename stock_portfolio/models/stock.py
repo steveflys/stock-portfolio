@@ -23,6 +23,3 @@ class Stock(Base):
     exchange = Column(String)
     issueType = Column(String)
     description = Column(String)
-
-
-# Index('my_index', Stock.symbol, unique=True, mysql_length=255)
