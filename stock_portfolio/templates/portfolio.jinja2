@@ -2,14 +2,17 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
-<h1>Your Portfolio</h1>
+<h1>My Pantry</h1>
 
 <ul>
-  {% for stock in stocks %}
+  {% for product in products %}
   <li>
-    <h2>{{stock.companyName}}</h2>
-    <p>({{stock.symbol}}) {{stock.website}}</p>
-    <p><a href="{{request.route_url('detail', symbol=stock.symbol)}}">view details</a></p>
+    <h2>{{product.name]}}</h2>
+    <p>({{product.brand]}}) {{product.size]}}</p>
+    <p display="hidden" value="product.id"></p>
+    <p><a href="{{request.route_url('detail', id=product.id)}}">View Details</a></p>
+    <p><a href="{{request.route_url('detail', id=product.id)}}">Add to Shopping List</a></p>
+    <p><a href="{{request.route_url('detail', id=product.id)}}">Edit Item</a></p>
   </li>
   {% endfor %}
 </ul>
